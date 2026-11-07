@@ -81,13 +81,6 @@
                 <i class="fa-solid fa-arrow-right text-xs"></i>
             </button>
         </form>
-
-        <div class="mt-6 text-center text-xs text-gray-600 bg-gray-50 rounded-lg p-3 border border-gray-200">
-            <p class="font-semibold text-gray-700 mb-1">Akun Percobaan (Demo):</p>
-            <p>Admin: <code class="bg-gray-200 px-1 py-0.5 rounded text-unsriNavy font-mono">admin@unsri.ac.id</code></p>
-            <p class="mt-1">Mahasiswa: <code class="bg-gray-200 px-1 py-0.5 rounded text-unsriNavy font-mono">mahasiswa@unsri.ac.id</code></p>
-            <p class="mt-1 text-gray-500">Password: <code class="bg-gray-200 px-1 py-0.5 rounded font-mono">password123</code></p>
-        </div>
     </div>
 
 </body>

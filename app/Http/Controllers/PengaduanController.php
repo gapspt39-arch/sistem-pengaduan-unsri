@@ -10,11 +10,9 @@ use Illuminate\Support\Str;
 
 class PengaduanController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | DASHBOARD MAHASISWA
-    |--------------------------------------------------------------------------
-    */
+    // ==================================================
+    // DASHBOARD MAHASISWA
+    // ==================================================
 
     public function indexMahasiswa(Request $request)
     {
@@ -38,18 +36,13 @@ class PengaduanController extends Controller
             ->paginate(5)
             ->withQueryString();
 
-        return view(
-            'mahasiswa.dashboard',
-            compact('pengaduans')
-        );
+        return view('mahasiswa.dashboard', compact('pengaduans'));
     }
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | DASHBOARD ADMIN
-    |--------------------------------------------------------------------------
-    */
+    // ==================================================
+    // DASHBOARD ADMIN
+    // ==================================================
 
     public function indexAdmin(Request $request)
     {
@@ -73,38 +66,25 @@ class PengaduanController extends Controller
         $query = Pengaduan::with('user');
 
         if ($request->filled('kategori')) {
-            $query->where(
-                'kategori',
-                $request->kategori
-            );
+            $query->where('kategori', $request->kategori);
         }
 
         if ($request->filled('status')) {
-            $query->where(
-                'status',
-                $request->status
-            );
+            $query->where('status', $request->status);
         }
 
         if ($request->filled('search')) {
             $search = $request->search;
 
             $query->where(function ($q) use ($search) {
-                $q->where(
-                    'judul',
-                    'like',
-                    '%' . $search . '%'
-                )->orWhere(
-                    'nomor_tiket',
-                    'like',
-                    '%' . $search . '%'
-                );
+                $q->where('judul', 'like', '%' . $search . '%')
+                    ->orWhere('nomor_tiket', 'like', '%' . $search . '%');
             });
         }
 
         $pengaduans = $query
             ->latest()
-            ->paginate(10)
+            ->paginate(9)
             ->withQueryString();
 
         return view(
@@ -120,11 +100,21 @@ class PengaduanController extends Controller
     }
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | SIMPAN PENGADUAN BARU
-    |--------------------------------------------------------------------------
-    */
+    // ==================================================
+    // DETAIL LAPORAN ADMIN
+    // ==================================================
+
+    public function showAdmin($id)
+    {
+        $pengaduan = Pengaduan::with('user')->findOrFail($id);
+
+        return view('admin.detail', compact('pengaduan'));
+    }
+
+
+    // ==================================================
+    // SIMPAN PENGADUAN BARU
+    // ==================================================
 
     public function store(Request $request)
     {
@@ -140,9 +130,10 @@ class PengaduanController extends Controller
         $path = null;
 
         if ($request->hasFile('bukti')) {
-            $path = $request
-                ->file('bukti')
-                ->store('bukti_pengaduan', 'public');
+            $path = $request->file('bukti')->store(
+                'bukti_pengaduan',
+                'public'
+            );
         }
 
         Pengaduan::create([
@@ -156,35 +147,27 @@ class PengaduanController extends Controller
             'urgensi' => $request->urgensi,
             'is_anonim' => $request->has('is_anonim'),
             'status' => 'Menunggu Verifikasi',
+            'alasan_ditolak' => null,
         ]);
 
-        return redirect()
-            ->back()
-            ->with(
-                'success',
-                'Laporan pengaduan berhasil dikirim dengan nomor tiket!'
-            );
+        return redirect()->back()->with(
+            'success',
+            'Laporan pengaduan berhasil dikirim dengan nomor tiket!'
+        );
     }
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | HALAMAN EDIT
-    |--------------------------------------------------------------------------
-    */
+    // ==================================================
+    // EDIT PENGADUAN MAHASISWA
+    // ==================================================
 
     public function edit($id)
     {
         $pengaduan = Pengaduan::findOrFail($id);
 
-        /*
-        | Mahasiswa hanya boleh mengedit pengaduannya sendiri.
-        | Admin boleh mengedit semua pengaduan.
-        */
-
         if (
-            Auth::user()->role !== 'admin' &&
-            $pengaduan->user_id !== Auth::id()
+            Auth::user()->role !== 'mahasiswa' ||
+            (int) $pengaduan->user_id !== (int) Auth::id()
         ) {
             abort(403, 'Anda tidak memiliki akses ke pengaduan ini.');
         }
@@ -196,23 +179,17 @@ class PengaduanController extends Controller
     }
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | UPDATE PENGADUAN
-    |--------------------------------------------------------------------------
-    */
+    // ==================================================
+    // UPDATE PENGADUAN MAHASISWA
+    // ==================================================
 
     public function update(Request $request, $id)
     {
         $pengaduan = Pengaduan::findOrFail($id);
 
-        /*
-        | Cek hak akses.
-        */
-
         if (
-            Auth::user()->role !== 'admin' &&
-            $pengaduan->user_id !== Auth::id()
+            Auth::user()->role !== 'mahasiswa' ||
+            (int) $pengaduan->user_id !== (int) Auth::id()
         ) {
             abort(403, 'Anda tidak memiliki akses ke pengaduan ini.');
         }
@@ -226,10 +203,6 @@ class PengaduanController extends Controller
             'urgensi' => 'required|string',
         ]);
 
-        /*
-        | Update data utama.
-        */
-
         $pengaduan->judul = $request->judul;
         $pengaduan->deskripsi = $request->deskripsi;
         $pengaduan->kategori = $request->kategori;
@@ -237,20 +210,13 @@ class PengaduanController extends Controller
         $pengaduan->urgensi = $request->urgensi;
         $pengaduan->is_anonim = $request->has('is_anonim');
 
-        /*
-        | Jika ada file baru, hapus file lama
-        | kemudian simpan file baru.
-        */
-
         if ($request->hasFile('bukti')) {
 
             if (
                 $pengaduan->bukti &&
                 Storage::disk('public')->exists($pengaduan->bukti)
             ) {
-                Storage::disk('public')->delete(
-                    $pengaduan->bukti
-                );
+                Storage::disk('public')->delete($pengaduan->bukti);
             }
 
             $pengaduan->bukti = $request
@@ -258,139 +224,57 @@ class PengaduanController extends Controller
                 ->store('bukti_pengaduan', 'public');
         }
 
-        /*
-        | Admin boleh mengubah status,
-        | alasan penolakan, dan unit penanganan.
-        */
-
-        if (Auth::user()->role === 'admin') {
-
-            $request->validate([
-                'status' => 'required|string',
-                'alasan_ditolak' => 'nullable|string',
-                'unit_terkait' => 'nullable|string',
-            ]);
-
-            $pengaduan->status = $request->status;
-            $pengaduan->unit_terkait = $request->unit_terkait;
-
-            if ($request->status === 'Ditolak') {
-                $pengaduan->alasan_ditolak =
-                    $request->alasan_ditolak;
-            } else {
-                $pengaduan->alasan_ditolak = null;
-            }
-        }
-
         $pengaduan->save();
-
-        /*
-        | Redirect berdasarkan role.
-        */
-
-        if (Auth::user()->role === 'admin') {
-            return redirect()
-                ->route('admin.dashboard')
-                ->with(
-                    'success',
-                    'Pengaduan ' .
-                        $pengaduan->nomor_tiket .
-                        ' berhasil diperbarui.'
-                );
-        }
 
         return redirect()
             ->route('mahasiswa.dashboard')
-            ->with(
-                'success',
-                'Pengaduan ' .
-                    $pengaduan->nomor_tiket .
-                    ' berhasil diperbarui.'
-            );
+            ->with('success', 'Pengaduan berhasil diperbarui.');
     }
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | HAPUS PENGADUAN
-    |--------------------------------------------------------------------------
-    */
+    // ==================================================
+    // HAPUS PENGADUAN MAHASISWA
+    // ==================================================
 
     public function destroy($id)
     {
         $pengaduan = Pengaduan::findOrFail($id);
 
-        /*
-        | Mahasiswa hanya boleh menghapus
-        | pengaduannya sendiri.
-        */
-
         if (
-            Auth::user()->role !== 'admin' &&
-            $pengaduan->user_id !== Auth::id()
+            Auth::user()->role !== 'mahasiswa' ||
+            (int) $pengaduan->user_id !== (int) Auth::id()
         ) {
             abort(403, 'Anda tidak memiliki akses ke pengaduan ini.');
         }
-
-        /*
-        | Hapus file bukti dari storage.
-        */
 
         if (
             $pengaduan->bukti &&
             Storage::disk('public')->exists($pengaduan->bukti)
         ) {
-            Storage::disk('public')->delete(
-                $pengaduan->bukti
-            );
+            Storage::disk('public')->delete($pengaduan->bukti);
         }
-
-        $nomorTiket = $pengaduan->nomor_tiket;
-
-        /*
-        | Hapus data dari database.
-        */
 
         $pengaduan->delete();
 
-        /*
-        | Redirect berdasarkan role.
-        */
-
-        if (Auth::user()->role === 'admin') {
-            return redirect()
-                ->route('admin.dashboard')
-                ->with(
-                    'success',
-                    'Pengaduan ' .
-                        $nomorTiket .
-                        ' berhasil dihapus.'
-                );
-        }
-
         return redirect()
             ->route('mahasiswa.dashboard')
-            ->with(
-                'success',
-                'Pengaduan ' .
-                    $nomorTiket .
-                    ' berhasil dihapus.'
-            );
+            ->with('success', 'Pengaduan berhasil dihapus.');
     }
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | UPDATE STATUS OLEH ADMIN
-    |--------------------------------------------------------------------------
-    */
+    // ==================================================
+    // UPDATE STATUS OLEH ADMIN
+    // ==================================================
 
     public function updateStatus(Request $request, $id)
     {
         $request->validate([
-            'status' => 'required|string',
-            'alasan_ditolak' => 'nullable|string',
-            'unit_terkait' => 'nullable|string',
+            'status' => 'required|in:Menunggu Verifikasi,Diterima,Sedang Diproses,Menunggu Informasi Tambahan,Selesai,Ditolak',
+            'alasan_ditolak' => 'required_if:status,Ditolak|nullable|string|max:1000',
+            'unit_terkait' => 'nullable|string|max:255',
+        ], [
+            'alasan_ditolak.required_if' =>
+            'Alasan wajib diisi ketika laporan ditolak.',
         ]);
 
         $pengaduan = Pengaduan::findOrFail($id);
@@ -398,18 +282,12 @@ class PengaduanController extends Controller
         $pengaduan->status = $request->status;
 
         if ($request->status === 'Ditolak') {
-            $pengaduan->alasan_ditolak =
-                $request->alasan_ditolak;
+            $pengaduan->alasan_ditolak = $request->alasan_ditolak;
         } else {
             $pengaduan->alasan_ditolak = null;
         }
 
-        if ($request->filled('unit_terkait')) {
-            $pengaduan->unit_terkait =
-                $request->unit_terkait;
-        } else {
-            $pengaduan->unit_terkait = null;
-        }
+        $pengaduan->unit_terkait = $request->unit_terkait;
 
         $pengaduan->save();
 
