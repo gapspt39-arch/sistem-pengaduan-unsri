@@ -23,7 +23,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
-<body class="bg-gray-50 font-sans antialiased flex flex-col min-h-screen">
+<body class="relative bg-slate-100/70 font-sans antialiased flex flex-col min-h-screen">
+
+    <!-- Watermark Background Logo UNSRI Transparan -->
+    <div class="fixed inset-0 pointer-events-none select-none flex items-center justify-center z-0 overflow-hidden" aria-hidden="true">
+        <div class="absolute w-[600px] h-[600px] sm:w-[800px] sm:h-[800px] bg-gradient-to-tr from-blue-100/30 via-teal-50/20 to-transparent rounded-full blur-3xl"></div>
+        <img src="{{ asset('images/logo-unsri.png') }}" 
+             alt="Logo UNSRI Watermark" 
+             class="w-[450px] sm:w-[580px] md:w-[680px] max-w-[85vw] max-h-[80vh] object-contain select-none pointer-events-none drop-shadow-sm"
+             style="opacity: 0.12;">
+    </div>
 
     <!-- NAVBAR UTAMA -->
     <nav class="bg-unsriNavy text-white shadow-md sticky top-0 z-50">
@@ -63,12 +72,12 @@
     </nav>
 
     <!-- KONTEN UTAMA -->
-    <main class="flex-grow">
+    <main class="flex-grow relative z-10">
         @yield('content')
     </main>
 
     <!-- FOOTER -->
-    <footer class="bg-unsriNavy text-white text-center py-4 text-xs sm:text-sm mt-auto border-t border-blue-900">
+    <footer class="bg-unsriNavy text-white text-center py-4 text-xs sm:text-sm mt-auto border-t border-blue-900 relative z-20">
         <p>&copy; {{ date('Y') }} Universitas Sriwijaya. Unit Layanan Terpadu & ICT Center UNSRI.</p>
     </footer>
 
