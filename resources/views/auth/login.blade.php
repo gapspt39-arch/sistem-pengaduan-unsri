@@ -22,16 +22,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
-<body class="relative min-h-screen flex items-center justify-center px-4 bg-slate-900 overflow-x-hidden">
+<body class="relative min-h-screen flex items-center justify-center px-4 bg-slate-900 overflow-x-hidden font-sans">
 
-    <!-- Background Layer with Logo UNSRI -->
-    <div class="fixed inset-0 z-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
-        <!-- Deep Navy Gradient Overlay -->
-        <div class="absolute inset-0 bg-gradient-to-br from-[#122349]/95 via-[#1b2f5d]/90 to-[#0b162e]/95"></div>
-        <!-- UNSRI Logo Watermark -->
-        <img src="{{ asset('images/logo-unsri.png') }}" 
-             alt="Logo UNSRI Background" 
-             class="w-[500px] sm:w-[620px] max-w-[85vw] max-h-[85vh] object-contain opacity-20 filter drop-shadow-2xl">
+    <!-- Background Landmark UNSRI with Gradient Overlay -->
+    <div class="fixed inset-0 z-0 select-none pointer-events-none">
+        <img src="{{ asset('images/unsri_landmark_plg.jpg') }}" 
+             alt="Landmark UNSRI" 
+             class="w-full h-full object-cover object-center filter brightness-[0.70] contrast-[1.05]">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-[#1b2f5d]/40 to-black/70 backdrop-blur-[1px]"></div>
     </div>
 
     <!-- Login Card -->
