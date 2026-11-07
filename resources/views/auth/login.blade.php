@@ -18,16 +18,26 @@
             }
         }
     </script>
+    <link rel="icon" type="image/png" href="{{ asset('images/logo-unsri.png') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
-<body class="bg-gray-100 flex items-center justify-center min-h-screen px-4">
+<body class="relative min-h-screen flex items-center justify-center px-4 bg-slate-900 overflow-x-hidden">
 
-    <div class="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 border-t-4 border-unsriTeal">
+    <!-- Background Layer with Logo UNSRI -->
+    <div class="fixed inset-0 z-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
+        <!-- Deep Navy Gradient Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-br from-[#122349]/95 via-[#1b2f5d]/90 to-[#0b162e]/95"></div>
+        <!-- UNSRI Logo Watermark -->
+        <img src="{{ asset('images/logo-unsri.png') }}" 
+             alt="Logo UNSRI Background" 
+             class="w-[500px] sm:w-[620px] max-w-[85vw] max-h-[85vh] object-contain opacity-20 filter drop-shadow-2xl">
+    </div>
+
+    <!-- Login Card -->
+    <div class="relative z-10 max-w-md w-full bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl p-8 border-t-4 border-unsriTeal">
         <div class="text-center mb-6">
-            <div class="inline-block bg-unsriNavy text-white px-3 py-1 rounded-lg text-lg font-black tracking-wider mb-2">
-                UNSRI
-            </div>
+            <img src="{{ asset('images/logo-unsri.png') }}" alt="Logo UNSRI" class="w-20 h-20 mx-auto mb-3 object-contain drop-shadow-md">
             <h1 class="text-2xl font-bold text-unsriNavy">SIPADU UNSRI</h1>
             <p class="text-xs text-gray-500 mt-1">Sistem Pengaduan Layanan & Fasilitas Kampus</p>
         </div>
