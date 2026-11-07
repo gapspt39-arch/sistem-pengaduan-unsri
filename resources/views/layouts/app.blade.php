@@ -19,6 +19,7 @@
             }
         }
     </script>
+    <link rel="icon" type="image/png" href="{{ asset('images/logo-unsri.png') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
@@ -30,9 +31,7 @@
             <div class="flex justify-between h-16 items-center">
                 <!-- Logo & Brand -->
                 <a href="{{ auth()->check() ? (auth()->user()->role === 'admin' ? url('/admin/dashboard') : url('/dashboard')) : url('/') }}" class="flex items-center space-x-3">
-                    <div class="bg-white px-2 py-1 rounded-lg shadow">
-                        <span class="text-unsriNavy font-black text-lg tracking-wider">UNSRI</span>
-                    </div>
+                    <img src="{{ asset('images/logo-unsri.png') }}" alt="Logo UNSRI" class="w-10 h-10 object-contain drop-shadow">
                     <div>
                         <span class="font-bold text-base sm:text-lg tracking-wide block leading-tight">SIPADU UNSRI</span>
                         <span class="text-xs text-unsriTeal font-medium">Layanan Pengaduan Mahasiswa & Kampus</span>
