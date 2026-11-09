@@ -43,7 +43,7 @@
         color: #1e293b;
         text-decoration: none;
 
-        box-shadow: 0 5px 15px rgba(15, 23, 42, 0.06);
+        box-shadow: 0 10px 25px -3px rgba(15, 23, 42, 0.12), 0 4px 10px -2px rgba(15, 23, 42, 0.07);
 
         transition:
             transform .3s ease,
@@ -102,7 +102,7 @@
         background: var(--hover-bg);
         border-color: var(--hover-border);
 
-        box-shadow: 0 20px 38px rgba(15, 23, 42, .20);
+        box-shadow: 0 24px 45px -5px rgba(15, 23, 42, 0.28), 0 10px 18px -4px rgba(15, 23, 42, 0.16);
     }
 
     /* ORNAMEN OVAL UNO */
@@ -296,7 +296,7 @@
             </p>
         </div>
 
-        <div class="bg-white border border-gray-200 rounded-xl px-4 py-3 shadow-sm">
+        <div class="bg-white border border-gray-200 rounded-xl px-4 py-3 shadow-md">
 
             <div class="flex items-center text-sm text-gray-600">
                 <i class="fa-solid fa-calendar-days mr-2 text-unsriTeal"></i>
@@ -311,7 +311,7 @@
     {{-- NOTIFIKASI --}}
     @if(session('success'))
 
-    <div class="mb-6 bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-xl p-4 text-sm">
+    <div class="mb-6 bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-xl p-4 text-sm shadow-md">
 
         <i class="fa-solid fa-circle-check mr-2"></i>
 
@@ -325,7 +325,7 @@
     {{-- STATISTIK --}}
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
 
-        <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+        <div class="bg-white rounded-2xl p-5 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100">
             <div class="flex items-center justify-between">
                 <span class="text-xs font-bold text-gray-500 uppercase">
                     Total Laporan
@@ -339,7 +339,7 @@
         </div>
 
 
-        <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+        <div class="bg-white rounded-2xl p-5 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100">
             <div class="flex items-center justify-between">
                 <span class="text-xs font-bold text-gray-500 uppercase">
                     Menunggu
@@ -353,7 +353,7 @@
         </div>
 
 
-        <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+        <div class="bg-white rounded-2xl p-5 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100">
             <div class="flex items-center justify-between">
                 <span class="text-xs font-bold text-gray-500 uppercase">
                     Diproses
@@ -367,7 +367,7 @@
         </div>
 
 
-        <div class="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+        <div class="bg-white rounded-2xl p-5 shadow-md hover:shadow-lg transition-all duration-300 border border-gray-100">
             <div class="flex items-center justify-between">
                 <span class="text-xs font-bold text-gray-500 uppercase">
                     Selesai
@@ -384,7 +384,7 @@
 
 
     {{-- FILTER --}}
-    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 mb-8">
+    <div class="bg-white rounded-2xl border border-gray-100 shadow-md hover:shadow-lg transition-all duration-300 p-5 mb-8">
 
         <div class="flex items-center gap-2 mb-4">
             <i class="fa-solid fa-sliders text-unsriTeal"></i>
@@ -529,7 +529,7 @@
             </p>
         </div>
 
-        <div class="text-xs font-semibold text-gray-500 bg-white border border-gray-200 px-3 py-2 rounded-full">
+        <div class="text-xs font-semibold text-gray-500 bg-white border border-gray-200 px-3 py-2 rounded-full shadow-sm">
             {{ $pengaduans->total() }} laporan ditemukan
         </div>
 
@@ -677,7 +677,7 @@
     {{-- PAGINATION --}}
     @if($pengaduans->hasPages())
 
-    <div class="mt-8 bg-white rounded-xl border border-gray-100 p-4">
+    <div class="mt-8 bg-white rounded-xl border border-gray-100 p-4 shadow-md">
 
         {{ $pengaduans->links() }}
 
@@ -688,7 +688,7 @@
     @else
 
     {{-- KOSONG --}}
-    <div class="bg-white rounded-3xl border border-dashed border-gray-300 p-12 text-center">
+    <div class="bg-white rounded-3xl border border-dashed border-gray-300 p-12 text-center shadow-md">
 
         <div class="w-20 h-20 mx-auto rounded-3xl bg-gray-100 flex items-center justify-center">
 

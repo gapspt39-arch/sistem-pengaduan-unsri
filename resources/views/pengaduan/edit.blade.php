@@ -30,7 +30,7 @@
     </div>
     @endif
 
-    <div class="bg-white rounded-xl shadow-md p-6 border-t-4 border-unsriTeal">
+    <div class="bg-white rounded-2xl shadow-xl p-6 border-t-4 border-unsriTeal border border-gray-100">
 
         <div class="mb-6">
             <h1 class="text-xl font-bold text-unsriNavy">
