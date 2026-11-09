@@ -21,6 +21,27 @@
     </script>
     <link rel="icon" type="image/png" href="{{ asset('images/logo-unsri.png') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @keyframes pageContentFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(14px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fade-in-content {
+            animation: pageContentFadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .fade-out-page {
+            opacity: 0 !important;
+            transform: translateY(8px) !important;
+            transition: opacity 0.2s ease-out, transform 0.2s ease-out !important;
+        }
+    </style>
 </head>
 
 <body class="relative bg-slate-100/70 font-sans antialiased flex flex-col min-h-screen">
@@ -72,7 +93,7 @@
     </nav>
 
     <!-- KONTEN UTAMA -->
-    <main class="flex-grow relative z-10">
+    <main id="mainContent" class="flex-grow relative z-10 animate-fade-in-content">
         @yield('content')
     </main>
 
@@ -80,6 +101,43 @@
     <footer class="bg-unsriNavy text-white text-center py-4 text-xs sm:text-sm mt-auto border-t border-blue-900 relative z-20">
         <p>&copy; {{ date('Y') }} Universitas Sriwijaya. Unit Layanan Terpadu & ICT Center UNSRI.</p>
     </footer>
+
+    <script>
+        // Trigger animasi fade in setiap kali halaman ditampilkan (termasuk saat user menekan tombol Back di browser)
+        window.addEventListener('pageshow', function (event) {
+            const mainContent = document.getElementById('mainContent') || document.querySelector('main');
+            if (mainContent) {
+                mainContent.classList.remove('fade-out-page');
+                mainContent.classList.remove('animate-fade-in-content');
+                void mainContent.offsetWidth; // Memicu reflow browser agar animasi terulang
+                mainContent.classList.add('animate-fade-in-content');
+            }
+        });
+
+        // Transisi fade out halus saat menekan tombol atau link kembali ke dashboard
+        document.addEventListener('DOMContentLoaded', function () {
+            const backLinks = document.querySelectorAll('.btn-back-transition, a[href*="dashboard"]');
+            backLinks.forEach(link => {
+                // Kecualikan navbar brand link atau footer
+                if (link.closest('nav') || link.closest('footer')) return;
+
+                link.addEventListener('click', function (e) {
+                    const href = this.getAttribute('href');
+                    if (!href || href === '#' || href.startsWith('javascript:') || this.target === '_blank') return;
+                    if (e.ctrlKey || e.metaKey || e.shiftKey) return;
+
+                    const mainContent = document.getElementById('mainContent') || document.querySelector('main');
+                    if (mainContent) {
+                        e.preventDefault();
+                        mainContent.classList.add('fade-out-page');
+                        setTimeout(() => {
+                            window.location.href = href;
+                        }, 200);
+                    }
+                });
+            });
+        });
+    </script>
 
 </body>
 

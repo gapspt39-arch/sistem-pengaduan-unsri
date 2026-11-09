@@ -20,12 +20,68 @@
     </script>
     <link rel="icon" type="image/png" href="{{ asset('images/logo-unsri.png') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Animasi Fade In Awal */
+        @keyframes loginFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(24px) scale(0.96);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes bgFadeIn {
+            0% {
+                opacity: 0;
+                transform: scale(1.05);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .animate-bg-enter {
+            animation: bgFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .animate-login-card {
+            animation: loginFadeIn 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Animasi Fade Out saat Berhasil Login */
+        .fade-out-card {
+            opacity: 0 !important;
+            transform: translateY(-20px) scale(0.95) !important;
+            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+
+        .fade-out-bg {
+            opacity: 0 !important;
+            transform: scale(1.03) !important;
+            transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out !important;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-8px); }
+            40%, 80% { transform: translateX(8px); }
+        }
+
+        .shake {
+            animation: shake 0.4s ease-in-out;
+        }
+    </style>
 </head>
 
 <body class="relative min-h-screen flex items-center justify-center px-4 bg-slate-900 overflow-x-hidden font-sans">
 
     <!-- Background Landmark UNSRI with Gradient Overlay -->
-    <div class="fixed inset-0 z-0 select-none pointer-events-none">
+    <div id="bgLayer" class="fixed inset-0 z-0 select-none pointer-events-none animate-bg-enter">
         <img src="{{ asset('images/unsri_landmark_plg.jpg') }}" 
              alt="Landmark UNSRI" 
              class="w-full h-full object-cover object-center filter brightness-[0.70] contrast-[1.05]">
@@ -33,32 +89,30 @@
     </div>
 
     <!-- Login Card -->
-    <div class="relative z-10 max-w-md w-full bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl p-8 border-t-4 border-unsriTeal">
+    <div id="loginCard" class="relative z-10 max-w-md w-full bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl p-8 border-t-4 border-unsriTeal animate-login-card">
         <div class="text-center mb-6">
             <img src="{{ asset('images/logo-unsri.png') }}" alt="Logo UNSRI" class="w-20 h-20 mx-auto mb-3 object-contain drop-shadow-md">
             <h1 class="text-2xl font-bold text-unsriNavy">SIPADU UNSRI</h1>
             <p class="text-xs text-gray-500 mt-1">Sistem Pengaduan Layanan & Fasilitas Kampus</p>
         </div>
 
-        @if($errors->any())
-        <div class="mb-4 bg-rose-50 border-l-4 border-rose-500 p-3 text-xs text-rose-700 rounded-r">
-            <div class="flex items-center">
-                <i class="fa-solid fa-circle-exclamation mr-2"></i>
+        <div id="alertContainer">
+            @if($errors->any())
+            <div class="mb-4 bg-rose-50 border-l-4 border-rose-500 p-3 text-xs text-rose-700 rounded-r flex items-center">
+                <i class="fa-solid fa-circle-exclamation mr-2 flex-shrink-0"></i>
                 <span>{{ $errors->first() }}</span>
             </div>
-        </div>
-        @endif
+            @endif
 
-        @if(session('success'))
-        <div class="mb-4 bg-emerald-50 border-l-4 border-emerald-500 p-3 text-xs text-emerald-700 rounded-r">
-            <div class="flex items-center">
-                <i class="fa-solid fa-circle-check mr-2"></i>
+            @if(session('success'))
+            <div class="mb-4 bg-emerald-50 border-l-4 border-emerald-500 p-3 text-xs text-emerald-700 rounded-r flex items-center">
+                <i class="fa-solid fa-circle-check mr-2 flex-shrink-0"></i>
                 <span>{{ session('success') }}</span>
             </div>
+            @endif
         </div>
-        @endif
 
-        <form action="{{ url('/login') }}" method="POST" class="space-y-4">
+        <form id="loginForm" action="{{ url('/login') }}" method="POST" class="space-y-4">
             @csrf
             <div>
                 <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Email Kampus</label>
@@ -84,12 +138,101 @@
                 </div>
             </div>
 
-            <button type="submit" class="w-full bg-unsriNavy hover:bg-blue-900 text-white font-semibold py-2.5 rounded-lg text-sm transition shadow-md flex items-center justify-center space-x-2">
-                <span>Masuk Sistem</span>
-                <i class="fa-solid fa-arrow-right text-xs"></i>
+            <button id="submitBtn" type="submit" class="w-full bg-unsriNavy hover:bg-blue-900 text-white font-semibold py-2.5 rounded-lg text-sm transition shadow-md flex items-center justify-center space-x-2">
+                <span id="btnText">Masuk Sistem</span>
+                <i id="btnIcon" class="fa-solid fa-arrow-right text-xs"></i>
             </button>
         </form>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('loginForm');
+            const loginCard = document.getElementById('loginCard');
+            const bgLayer = document.getElementById('bgLayer');
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const btnIcon = document.getElementById('btnIcon');
+            const alertContainer = document.getElementById('alertContainer');
+
+            if (!form) return;
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                // Bersihkan pesan error sebelumnya
+                if (alertContainer) {
+                    alertContainer.innerHTML = '';
+                }
+
+                // Tampilkan status proses pada tombol
+                submitBtn.disabled = true;
+                btnText.textContent = 'Memverifikasi...';
+                btnIcon.className = 'fa-solid fa-circle-notch fa-spin text-xs';
+
+                const formData = new FormData(form);
+
+                try {
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: formData
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok && data.success) {
+                        // Login Berhasil: Ubah tampilan tombol
+                        btnText.textContent = 'Login Berhasil, Mengalihkan...';
+                        btnIcon.className = 'fa-solid fa-check text-xs';
+                        submitBtn.classList.remove('bg-unsriNavy', 'hover:bg-blue-900');
+                        submitBtn.classList.add('bg-emerald-600');
+
+                        // Jalankan efek Fade Out
+                        setTimeout(() => {
+                            loginCard.classList.add('fade-out-card');
+                            if (bgLayer) {
+                                bgLayer.classList.add('fade-out-bg');
+                            }
+                        }, 180);
+
+                        // Pindah ke dashboard setelah animasi fade out selesai
+                        setTimeout(() => {
+                            window.location.href = data.redirect_url;
+                        }, 680);
+
+                    } else {
+                        // Login Gagal: Pulihkan tombol dan tampilkan pesan kesalahan
+                        submitBtn.disabled = false;
+                        btnText.textContent = 'Masuk Sistem';
+                        btnIcon.className = 'fa-solid fa-arrow-right text-xs';
+
+                        const errorMsg = data.message || (data.errors ? Object.values(data.errors)[0][0] : 'Email atau password salah.');
+
+                        if (alertContainer) {
+                            alertContainer.innerHTML = `
+                                <div class="mb-4 bg-rose-50 border-l-4 border-rose-500 p-3 text-xs text-rose-700 rounded-r flex items-center">
+                                    <i class="fa-solid fa-circle-exclamation mr-2 flex-shrink-0"></i>
+                                    <span>${errorMsg}</span>
+                                </div>
+                            `;
+                        }
+
+                        // Efek getar (shake) pada kartu login jika gagal
+                        loginCard.classList.remove('shake');
+                        void loginCard.offsetWidth; // trigger reflow
+                        loginCard.classList.add('shake');
+                    }
+                } catch (err) {
+                    // Fallback: Kirim form secara konvensional jika terjadi kendala jaringan/script
+                    form.submit();
+                }
+            });
+        });
+    </script>
 
 </body>
 

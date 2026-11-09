@@ -7,8 +7,8 @@
         <a href="{{ Auth::user()->role === 'admin'
             ? route('admin.dashboard')
             : route('mahasiswa.dashboard') }}"
-            class="inline-flex items-center text-sm text-gray-500 hover:text-unsriNavy">
-            <i class="fa-solid fa-arrow-left mr-2"></i>
+            class="inline-flex items-center text-sm font-bold text-gray-500 hover:text-unsriNavy btn-back-transition group transition">
+            <i class="fa-solid fa-arrow-left mr-2 group-hover:-translate-x-1 transition-transform"></i>
             Kembali
         </a>
     </div>

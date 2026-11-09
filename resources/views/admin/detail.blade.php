@@ -89,9 +89,9 @@ default => 'bg-gray-100 text-gray-800 border-gray-200',
     {{-- TOMBOL KEMBALI --}}
     <a
         href="{{ route('admin.dashboard') }}"
-        class="inline-flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-unsriNavy mb-6">
+        class="inline-flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-unsriNavy mb-6 btn-back-transition group transition">
 
-        <i class="fa-solid fa-arrow-left"></i>
+        <i class="fa-solid fa-arrow-left group-hover:-translate-x-1 transition-transform"></i>
 
         Kembali ke Dashboard
 
