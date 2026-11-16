@@ -1,19 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-8">
 
     @if(session('success'))
-    <div class="mb-6 bg-emerald-50 border-l-4 border-emerald-500 p-4 rounded-r shadow-sm text-emerald-800 flex items-center">
-        <i class="fa-solid fa-circle-check mr-2 text-emerald-600"></i>
+    <div class="mb-5 sm:mb-6 bg-emerald-50 border-l-4 border-emerald-500 p-3.5 sm:p-4 rounded-r shadow-sm text-emerald-800 flex items-center text-xs sm:text-sm">
+        <i class="fa-solid fa-circle-check mr-2 text-emerald-600 flex-shrink-0"></i>
         <span>{{ session('success') }}</span>
     </div>
     @endif
 
     @if($errors->any())
-    <div class="mb-6 bg-rose-50 border-l-4 border-rose-500 p-4 rounded-r shadow-sm text-rose-800">
-        <div class="flex items-center mb-1">
-            <i class="fa-solid fa-triangle-exclamation mr-2 text-rose-600"></i>
+    <div class="mb-5 sm:mb-6 bg-rose-50 border-l-4 border-rose-500 p-3.5 sm:p-4 rounded-r shadow-sm text-rose-800">
+        <div class="flex items-center mb-1 text-xs sm:text-sm">
+            <i class="fa-solid fa-triangle-exclamation mr-2 text-rose-600 flex-shrink-0"></i>
             <span class="font-semibold">Mohon perbaiki kesalahan berikut:</span>
         </div>
         <ul class="list-disc list-inside text-xs space-y-1">
@@ -24,14 +24,14 @@
     </div>
     @endif
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
 
         <!-- KOLOM KIRI: FORM PENGADUAN BARU -->
-        <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-6 border-t-4 border-unsriTeal border-x border-b border-gray-100 h-fit">
-            <h2 class="text-lg font-bold text-unsriNavy mb-4 flex items-center">
+        <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 p-4 sm:p-6 border-t-4 border-unsriTeal border-x border-b border-gray-100 h-fit">
+            <h2 class="text-base sm:text-lg font-bold text-unsriNavy mb-4 flex items-center">
                 <i class="fa-solid fa-pen-to-square mr-2 text-unsriTeal"></i> Buat Pengaduan Baru
             </h2>
-            <form action="{{ route('pengaduan.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+            <form action="{{ route('pengaduan.store') }}" method="POST" enctype="multipart/form-data" class="space-y-3.5 sm:space-y-4">
                 @csrf
                 <div>
                     <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Judul Pengaduan <span class="text-rose-500">*</span></label>
@@ -71,7 +71,7 @@
 
                 <div>
                     <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Bukti Foto / Dokumen (Opsional)</label>
-                    <input type="file" name="bukti" class="w-full text-xs text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-unsriTeal file:text-white hover:file:bg-teal-700">
+                    <input type="file" name="bukti" class="w-full text-xs text-gray-500 file:mr-3 sm:file:mr-4 file:py-2 file:px-3 sm:file:px-4 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-unsriTeal file:text-white hover:file:bg-teal-700">
                     <p class="text-[10px] text-gray-400 mt-1">Maksimal 5MB (Format: JPG, PNG, PDF, MP4)</p>
                 </div>
 
@@ -80,7 +80,7 @@
                     <label for="is_anonim" class="text-xs text-gray-600 font-medium">Kirim sebagai Anonim (Nama dirahasiakan)</label>
                 </div>
 
-                <button type="submit" class="w-full bg-unsriNavy hover:bg-blue-900 text-white font-medium py-2.5 px-4 rounded-lg text-sm transition shadow flex items-center justify-center space-x-1">
+                <button type="submit" class="w-full bg-unsriNavy hover:bg-blue-900 text-white font-semibold py-3 sm:py-2.5 px-4 rounded-xl text-sm transition shadow flex items-center justify-center space-x-2 touch-manipulation">
                     <i class="fa-solid fa-paper-plane text-xs"></i>
                     <span>Kirim Laporan</span>
                 </button>
@@ -89,9 +89,9 @@
 
         <!-- KOLOM KANAN: RIWAYAT & TRACKING -->
         <div class="lg:col-span-2 space-y-6">
-            <div class="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
-                <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
-                    <h2 class="text-lg font-bold text-unsriNavy flex items-center">
+            <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-6 border border-gray-100">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-5 sm:mb-6 gap-3 sm:gap-4">
+                    <h2 class="text-base sm:text-lg font-bold text-unsriNavy flex items-center">
                         <i class="fa-solid fa-clock-rotate-left mr-2 text-unsriTeal"></i> Riwayat & Tracking Pengaduan
                     </h2>
 
@@ -99,11 +99,11 @@
                     <form method="GET" action="{{ route('mahasiswa.dashboard') }}" class="flex items-center space-x-2 w-full sm:w-auto">
                         <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari tiket/judul..."
                             class="text-xs border border-gray-300 rounded-lg px-3 py-2 w-full sm:w-48 focus:ring-unsriTeal">
-                        <button type="submit" class="bg-unsriTeal text-white px-3 py-2 rounded-lg text-xs hover:bg-teal-700 transition">
+                        <button type="submit" class="bg-unsriTeal text-white px-3 py-2 rounded-lg text-xs hover:bg-teal-700 transition flex-shrink-0">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
                         @if(request('search'))
-                        <a href="{{ route('mahasiswa.dashboard') }}" class="bg-gray-200 text-gray-600 px-2 py-2 rounded-lg text-xs hover:bg-gray-300 transition">
+                        <a href="{{ route('mahasiswa.dashboard') }}" class="bg-gray-200 text-gray-600 px-2 py-2 rounded-lg text-xs hover:bg-gray-300 transition flex-shrink-0">
                             Reset
                         </a>
                         @endif
@@ -112,16 +112,16 @@
 
                 <div class="space-y-4">
                     @forelse($pengaduans as $item)
-                    <div class="bg-white border border-gray-200 rounded-xl p-5 hover:border-unsriTeal transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-0.5">
-                        <div class="flex justify-between items-start mb-2">
-                            <div>
+                    <div class="bg-white border border-gray-200 rounded-xl p-4 sm:p-5 hover:border-unsriTeal transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-0.5">
+                        <div class="flex flex-wrap sm:flex-nowrap justify-between items-start gap-2 mb-2">
+                            <div class="flex items-center flex-wrap gap-1.5">
                                 <span class="text-xs font-bold bg-blue-100 text-unsriNavy px-2.5 py-1 rounded-md">{{ $item->nomor_tiket }}</span>
-                                <span class="text-xs text-gray-500 ml-2">{{ $item->created_at->format('d M Y H:i') }}</span>
+                                <span class="text-xs text-gray-500">{{ $item->created_at->format('d M Y H:i') }}</span>
                                 @if($item->is_anonim)
-                                <span class="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full ml-1">Anonim</span>
+                                <span class="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">Anonim</span>
                                 @endif
                             </div>
-                            <span class="text-xs px-2.5 py-1 rounded-full font-semibold
+                            <span class="text-xs px-2.5 py-1 rounded-full font-semibold flex-shrink-0
                                     @if($item->status == 'Selesai') bg-emerald-100 text-emerald-800
                                     @elseif($item->status == 'Ditolak') bg-rose-100 text-rose-800
                                     @elseif($item->status == 'Sedang Diproses') bg-amber-100 text-amber-800
@@ -130,16 +130,16 @@
                             </span>
                         </div>
 
-                        <h3 class="font-bold text-gray-800 text-base mb-1">{{ $item->judul }}</h3>
-                        <p class="text-xs text-gray-600 mb-2">
-                            <i class="fa-solid fa-location-dot text-unsriTeal mr-1"></i> {{ $item->lokasi }} | Kategori: <strong>{{ $item->kategori }}</strong> | Urgensi: <span class="font-semibold">{{ $item->urgensi }}</span>
+                        <h3 class="font-bold text-gray-800 text-sm sm:text-base mb-1">{{ $item->judul }}</h3>
+                        <p class="text-xs text-gray-600 mb-2 leading-relaxed">
+                            <i class="fa-solid fa-location-dot text-unsriTeal mr-1"></i> {{ $item->lokasi }} <span class="hidden xs:inline">|</span> <span class="block xs:inline">Kategori: <strong>{{ $item->kategori }}</strong></span> <span class="hidden xs:inline">|</span> <span class="block xs:inline">Urgensi: <span class="font-semibold">{{ $item->urgensi }}</span></span>
                         </p>
-                        <p class="text-sm text-gray-700 bg-gray-50 p-3 rounded-md mb-2 border border-gray-100">{{ $item->deskripsi }}</p>
+                        <p class="text-xs sm:text-sm text-gray-700 bg-gray-50 p-3 rounded-lg mb-2 border border-gray-100 leading-relaxed">{{ $item->deskripsi }}</p>
 
                         @if($item->bukti)
                         <div class="mb-2">
                             <a href="{{ asset('storage/' . $item->bukti) }}" target="_blank"
-                                class="inline-flex items-center space-x-1 text-xs text-blue-600 hover:text-blue-800 font-medium">
+                                class="inline-flex items-center space-x-1.5 text-xs text-blue-600 hover:text-blue-800 font-medium py-1">
                                 <i class="fa-solid fa-paperclip"></i>
                                 <span>Lihat Bukti Lampiran</span>
                             </a>
@@ -153,7 +153,7 @@
                         @endif
 
                         @if($item->status == 'Ditolak' && $item->alasan_ditolak)
-                        <div class="bg-rose-50 text-rose-700 text-xs p-2.5 rounded border border-rose-200 mt-2">
+                        <div class="bg-rose-50 text-rose-700 text-xs p-2.5 rounded-lg border border-rose-200 mt-2">
                             <strong>Alasan Ditolak:</strong> {{ $item->alasan_ditolak }}
                         </div>
                         @endif
@@ -162,9 +162,9 @@
                             {{-- EDIT --}}
                             <a
                                 href="{{ route('pengaduan.edit', $item->id) }}"
-                                class="inline-flex items-center bg-amber-500 hover:bg-amber-600 text-white text-xs font-medium px-3 py-2 rounded-lg transition">
+                                class="flex-1 sm:flex-none justify-center inline-flex items-center bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold px-3.5 py-2 rounded-lg transition shadow-sm">
 
-                                <i class="fa-solid fa-pen-to-square mr-1"></i>
+                                <i class="fa-solid fa-pen-to-square mr-1.5"></i>
                                 Edit
                             </a>
 
@@ -172,6 +172,7 @@
                             <form
                                 action="{{ route('pengaduan.destroy', $item->id) }}"
                                 method="POST"
+                                class="flex-1 sm:flex-none"
                                 onsubmit="return confirm('Yakin ingin menghapus pengaduan ini? Data yang dihapus tidak dapat dikembalikan.')">
 
                                 @csrf
@@ -179,9 +180,9 @@
 
                                 <button
                                     type="submit"
-                                    class="inline-flex items-center bg-rose-500 hover:bg-rose-600 text-white text-xs font-medium px-3 py-2 rounded-lg transition">
+                                    class="w-full sm:w-auto justify-center inline-flex items-center bg-rose-500 hover:bg-rose-600 text-white text-xs font-semibold px-3.5 py-2 rounded-lg transition shadow-sm">
 
-                                    <i class="fa-solid fa-trash mr-1"></i>
+                                    <i class="fa-solid fa-trash mr-1.5"></i>
                                     Hapus
                                 </button>
 

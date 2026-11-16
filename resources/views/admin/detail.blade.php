@@ -31,16 +31,30 @@ default => 'bg-gray-100 text-gray-800 border-gray-200',
     .detail-panel {
         background: white;
         border: 1px solid #e5e7eb;
-        border-radius: 24px;
-        box-shadow: 0 12px 30px -4px rgba(15, 23, 42, 0.12), 0 6px 14px -4px rgba(15, 23, 42, 0.08);
+        border-radius: 20px;
+        box-shadow: 0 10px 25px -4px rgba(15, 23, 42, 0.08);
+    }
+
+    @media (min-width: 640px) {
+        .detail-panel {
+            border-radius: 24px;
+            box-shadow: 0 12px 30px -4px rgba(15, 23, 42, 0.12), 0 6px 14px -4px rgba(15, 23, 42, 0.08);
+        }
     }
 
     .detail-info {
         background: #f8fafc;
         border: 1px solid #e2e8f0;
-        border-radius: 15px;
-        padding: 15px;
+        border-radius: 14px;
+        padding: 13px;
         box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    }
+
+    @media (min-width: 640px) {
+        .detail-info {
+            border-radius: 15px;
+            padding: 15px;
+        }
     }
 
     .detail-label {
@@ -54,21 +68,28 @@ default => 'bg-gray-100 text-gray-800 border-gray-200',
     }
 
     .detail-value {
-        font-size: 14px;
+        font-size: 13px;
         color: #1e293b;
         font-weight: 600;
         line-height: 1.6;
         overflow-wrap: anywhere;
     }
 
+    @media (min-width: 640px) {
+        .detail-value {
+            font-size: 14px;
+        }
+    }
+
     .detail-input {
         width: 100%;
         border: 1px solid #cbd5e1;
         border-radius: 12px;
-        padding: 12px;
+        padding: 11px 12px;
         font-size: 13px;
         outline: none;
         background: white;
+        -webkit-appearance: none;
     }
 
     .detail-input:focus {
@@ -78,18 +99,35 @@ default => 'bg-gray-100 text-gray-800 border-gray-200',
 
     .detail-section-title {
         color: #213a75;
-        font-size: 17px;
+        font-size: 16px;
         font-weight: 800;
+        font-family: 'Geist', sans-serif;
+    }
+
+    @media (min-width: 640px) {
+        .detail-section-title {
+            font-size: 17px;
+        }
+    }
+
+    .detail-label,
+    .detail-panel h2 {
+        font-family: 'Geist', sans-serif;
+    }
+
+    .detail-value,
+    .detail-input {
+        font-family: 'Plus Jakarta Sans', sans-serif;
     }
 </style>
 
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-8">
 
     {{-- TOMBOL KEMBALI --}}
     <a
         href="{{ route('admin.dashboard') }}"
-        class="inline-flex items-center gap-2 text-sm font-bold text-gray-500 hover:text-unsriNavy mb-6 btn-back-transition group transition">
+        class="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-gray-500 hover:text-unsriNavy mb-4 sm:mb-6 btn-back-transition group transition">
 
         <i class="fa-solid fa-arrow-left group-hover:-translate-x-1 transition-transform"></i>
 
@@ -99,27 +137,27 @@ default => 'bg-gray-100 text-gray-800 border-gray-200',
 
 
     {{-- HEADER DETAIL --}}
-    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-7">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-5 sm:mb-7">
 
         <div>
 
-            <span class="text-xs text-unsriTeal font-extrabold uppercase tracking-widest">
+            <span class="text-[10px] sm:text-xs text-unsriTeal font-extrabold uppercase tracking-widest">
                 Admin Control Center
             </span>
 
-            <h1 class="text-2xl md:text-3xl font-extrabold text-unsriNavy mt-1">
+            <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-unsriNavy mt-1">
                 Detail Pengaduan
             </h1>
 
-            <p class="text-sm text-gray-500 mt-2">
+            <p class="text-xs sm:text-sm text-gray-500 mt-1 sm:mt-2">
                 Periksa informasi laporan dan lakukan tindak lanjut.
             </p>
 
         </div>
 
-        <div class="inline-flex items-center self-start md:self-center">
+        <div class="inline-flex items-center self-start sm:self-center">
 
-            <span class="rounded-full border px-4 py-2 text-xs font-extrabold {{ $badgeClass }}">
+            <span class="rounded-full border px-3 sm:px-4 py-1.5 sm:py-2 text-[11px] sm:text-xs font-extrabold {{ $badgeClass }}">
                 {{ strtoupper($pengaduan->status) }}
             </span>
 
@@ -168,12 +206,12 @@ default => 'bg-gray-100 text-gray-800 border-gray-200',
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
         {{-- DETAIL INFORMASI LAPORAN --}}
-        <div class="lg:col-span-2 space-y-6">
+        <div class="lg:col-span-2 space-y-5 sm:space-y-6">
 
-            <div class="detail-panel p-5 md:p-7">
+            <div class="detail-panel p-4 sm:p-6 md:p-7">
 
                 {{-- NOMOR TIKET --}}
-                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5 sm:mb-6">
 
                     <div>
 
@@ -181,13 +219,13 @@ default => 'bg-gray-100 text-gray-800 border-gray-200',
                             Nomor Tiket
                         </span>
 
-                        <h2 class="text-xl font-extrabold text-unsriNavy tracking-wide">
+                        <h2 class="text-lg sm:text-xl font-extrabold text-unsriNavy tracking-wide">
                             {{ $pengaduan->nomor_tiket }}
                         </h2>
 
                     </div>
 
-                    <div class="bg-blue-50 text-blue-800 px-3 py-2 rounded-xl text-xs font-bold">
+                    <div class="bg-blue-50 text-blue-800 px-3 py-1.5 sm:py-2 rounded-xl text-xs font-bold self-start sm:self-auto">
 
                         <i class="fa-solid fa-calendar-days mr-1"></i>
 
@@ -198,17 +236,17 @@ default => 'bg-gray-100 text-gray-800 border-gray-200',
                 </div>
 
 
-                <div class="border-t border-gray-100 pt-6">
+                <div class="border-t border-gray-100 pt-5 sm:pt-6">
 
                     <span class="detail-label">
                         Judul Pengaduan
                     </span>
 
-                    <h2 class="text-2xl font-extrabold text-gray-800 leading-snug">
+                    <h2 class="text-xl sm:text-2xl font-extrabold text-gray-800 leading-snug">
                         {{ $pengaduan->judul }}
                     </h2>
 
-                    <p class="text-sm font-bold text-unsriTeal mt-2">
+                    <p class="text-xs sm:text-sm font-bold text-unsriTeal mt-1.5 sm:mt-2">
                         {{ $pengaduan->kategori }}
                     </p>
 
@@ -306,23 +344,23 @@ default => 'bg-gray-100 text-gray-800 border-gray-200',
 
                     @if($pengaduan->bukti)
 
-                    <div class="bg-blue-50 border border-blue-100 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                    <div class="bg-blue-50 border border-blue-100 rounded-xl p-3.5 sm:p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
 
                         <div class="flex items-center gap-3">
 
-                            <div class="w-11 h-11 bg-white rounded-xl flex items-center justify-center text-blue-600 shadow-sm">
+                            <div class="w-10 h-10 sm:w-11 sm:h-11 bg-white rounded-xl flex items-center justify-center text-blue-600 shadow-sm flex-shrink-0">
 
-                                <i class="fa-solid fa-file-arrow-down text-lg"></i>
+                                <i class="fa-solid fa-file-arrow-down text-base sm:text-lg"></i>
 
                             </div>
 
-                            <div>
+                            <div class="min-w-0">
 
-                                <p class="text-sm font-bold text-gray-700">
+                                <p class="text-xs sm:text-sm font-bold text-gray-700 truncate">
                                     Bukti Pengaduan
                                 </p>
 
-                                <p class="text-xs text-gray-500">
+                                <p class="text-[11px] sm:text-xs text-gray-500">
                                     Lampiran laporan mahasiswa
                                 </p>
 
@@ -334,7 +372,7 @@ default => 'bg-gray-100 text-gray-800 border-gray-200',
                             href="{{ asset('storage/' . $pengaduan->bukti) }}"
                             target="_blank"
                             rel="noopener noreferrer"
-                            class="inline-flex justify-center items-center gap-2 bg-unsriNavy hover:bg-blue-900 text-white px-4 py-2.5 rounded-xl text-xs font-bold">
+                            class="inline-flex justify-center items-center gap-2 bg-unsriNavy hover:bg-blue-900 text-white px-4 py-2.5 rounded-xl text-xs font-bold w-full sm:w-auto transition">
 
                             <i class="fa-solid fa-eye"></i>
 
@@ -388,9 +426,9 @@ default => 'bg-gray-100 text-gray-800 border-gray-200',
 
 
         {{-- PANEL PENGELOLAAN ADMIN --}}
-        <div class="space-y-5">
+        <div class="space-y-4 sm:space-y-5">
 
-            <div class="detail-panel p-5 md:p-6">
+            <div class="detail-panel p-4 sm:p-5 md:p-6">
 
                 <div class="mb-6">
 

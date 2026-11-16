@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Sistem Pengaduan UNSRI</title>
+    <!-- Google Fonts: Geist (Judul) & Plus Jakarta Sans (Isi) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -13,6 +18,12 @@
                     colors: {
                         unsriNavy: '#213a75',
                         unsriTeal: '#409da1',
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                        heading: ['"Geist"', '"Plus Jakarta Sans"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                        geist: ['"Geist"', 'sans-serif'],
+                        jakarta: ['"Plus Jakarta Sans"', 'sans-serif'],
                     }
                 }
             }
@@ -22,6 +33,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        h1, h2, h3, .font-heading {
+            font-family: 'Geist', 'Plus Jakarta Sans', sans-serif;
+            letter-spacing: -0.02em;
+        }
         /* Animasi Fade In Awal */
         @keyframes loginFadeIn {
             0% {
@@ -78,7 +97,7 @@
     </style>
 </head>
 
-<body class="relative min-h-screen flex items-center justify-center px-4 bg-slate-900 overflow-x-hidden font-sans">
+<body class="relative min-h-screen flex items-center justify-center p-3 sm:p-4 bg-slate-900 overflow-x-hidden font-sans">
 
     <!-- Background Landmark UNSRI with Gradient Overlay -->
     <div id="bgLayer" class="fixed inset-0 z-0 select-none pointer-events-none animate-bg-enter">
@@ -89,11 +108,11 @@
     </div>
 
     <!-- Login Card -->
-    <div id="loginCard" class="relative z-10 max-w-md w-full bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl p-8 border-t-4 border-unsriTeal animate-login-card">
-        <div class="text-center mb-6">
-            <img src="{{ asset('images/logo-unsri.png') }}" alt="Logo UNSRI" class="w-20 h-20 mx-auto mb-3 object-contain drop-shadow-md">
-            <h1 class="text-2xl font-bold text-unsriNavy">SIPADU UNSRI</h1>
-            <p class="text-xs text-gray-500 mt-1">Sistem Pengaduan Layanan & Fasilitas Kampus</p>
+    <div id="loginCard" class="relative z-10 max-w-md w-full bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl p-5 sm:p-8 border-t-4 border-unsriTeal animate-login-card my-auto">
+        <div class="text-center mb-5 sm:mb-6">
+            <img src="{{ asset('images/logo-unsri.png') }}" alt="Logo UNSRI" class="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-2.5 sm:mb-3 object-contain drop-shadow-md">
+            <h1 class="text-xl sm:text-2xl font-bold text-unsriNavy">SIPADU UNSRI</h1>
+            <p class="text-[11px] sm:text-xs text-gray-500 mt-1">Sistem Pengaduan Layanan & Fasilitas Kampus</p>
         </div>
 
         <div id="alertContainer">
@@ -112,7 +131,7 @@
             @endif
         </div>
 
-        <form id="loginForm" action="{{ url('/login') }}" method="POST" class="space-y-4">
+        <form id="loginForm" action="{{ url('/login') }}" method="POST" class="space-y-3.5 sm:space-y-4">
             @csrf
             <div>
                 <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Email Kampus</label>
@@ -121,7 +140,7 @@
                         <i class="fa-solid fa-envelope text-xs"></i>
                     </span>
                     <input type="email" name="email" value="{{ old('email') }}" required autofocus
-                        class="w-full text-sm pl-9 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-unsriTeal focus:border-transparent outline-none transition"
+                        class="w-full text-sm pl-9 pr-3 py-2.5 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-unsriTeal focus:border-transparent outline-none transition"
                         placeholder="nama@unsri.ac.id">
                 </div>
             </div>
@@ -133,12 +152,12 @@
                         <i class="fa-solid fa-lock text-xs"></i>
                     </span>
                     <input type="password" name="password" required
-                        class="w-full text-sm pl-9 pr-3 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-unsriTeal focus:border-transparent outline-none transition"
+                        class="w-full text-sm pl-9 pr-3 py-2.5 sm:py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-unsriTeal focus:border-transparent outline-none transition"
                         placeholder="••••••••">
                 </div>
             </div>
 
-            <button id="submitBtn" type="submit" class="w-full bg-unsriNavy hover:bg-blue-900 text-white font-semibold py-2.5 rounded-lg text-sm transition shadow-md flex items-center justify-center space-x-2">
+            <button id="submitBtn" type="submit" class="w-full bg-unsriNavy hover:bg-blue-900 text-white font-semibold py-3 sm:py-2.5 rounded-lg text-sm transition shadow-md flex items-center justify-center space-x-2 touch-manipulation">
                 <span id="btnText">Masuk Sistem</span>
                 <i id="btnIcon" class="fa-solid fa-arrow-right text-xs"></i>
             </button>
