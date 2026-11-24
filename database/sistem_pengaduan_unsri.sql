@@ -230,7 +230,7 @@ CREATE TABLE `pengaduans` (
   UNIQUE KEY `pengaduans_nomor_tiket_unique` (`nomor_tiket`),
   KEY `pengaduans_user_id_foreign` (`user_id`),
   CONSTRAINT `pengaduans_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -239,7 +239,7 @@ CREATE TABLE `pengaduans` (
 
 LOCK TABLES `pengaduans` WRITE;
 /*!40000 ALTER TABLE `pengaduans` DISABLE KEYS */;
-INSERT INTO `pengaduans` VALUES (1,'UNSRI-EX001',2,'AC Ruang Kuliah 3.1 Rusak','Pendingin ruangan (AC) di lantai 3 ruang 3.1 Gedung Perkuliahan Fasilkom tidak berfungsi sejak kemarin dan mengeluarkan bunyi bising.','Sarana dan Prasarana','Gedung Kuliah Fasilkom Lantai 3',NULL,'Sedang',0,'Menunggu Verifikasi',NULL,NULL,'2026-11-24 00:38:28','2026-11-24 00:38:28'),(2,'UNSRI-EX002',2,'Koneksi WiFi Unsri Hotspot Sering Terputus','Koneksi WiFi di perpustakaan pusat sering mengalami time out dan tidak bisa login akun SSO.','Sarana dan Prasarana','Perpustakaan Pusat Indralaya',NULL,'Tinggi',1,'Sedang Diproses',NULL,'ICT Center UNSRI','2026-11-24 00:38:28','2026-11-24 00:38:28');
+INSERT INTO `pengaduans` VALUES (3,'UNSRI-BYTWFD',2,'Rakha','Tes','Kemahasiswaan','CL 1.1','bukti_pengaduan/PSwSMi15h1Jbekm046EcGuwb1OvyJvrctBWTVHUS.png','Darurat',0,'Menunggu Verifikasi',NULL,NULL,'2026-11-24 00:54:07','2026-11-24 00:54:07');
 /*!40000 ALTER TABLE `pengaduans` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -269,6 +269,7 @@ CREATE TABLE `sessions` (
 
 LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
+INSERT INTO `sessions` VALUES ('Z8mSd5Hm93ZWkpGsC7IPYr58xIIw2Zdkxej6pYgP',1,'127.0.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36','YTo1OntzOjY6Il90b2tlbiI7czo0MDoiUHlPYkdNazNUaWhiYngwYzlHZ3ZVNHcyd25iQXdrRGgwVWp2blZyYiI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6Mjp7czozOiJ1cmwiO3M6Mzc6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9kYXNoYm9hcmQiO3M6NToicm91dGUiO3M6MTU6ImFkbWluLmRhc2hib2FyZCI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7czoxNzoicGFzc3dvcmRfaGFzaF93ZWIiO3M6NjQ6ImQzYzUyNzFhM2E3NjIwN2IwYTdmNjkyZDk2ZDk5YmQwNzJhYjljODIxNmJiMTNlZjIwNDA4MDdhODZhNWRjZTIiO30=',1795507756);
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -315,4 +316,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-11-24 14:38:54
+-- Dump completed on 2026-11-24 15:12:10
