@@ -1,22 +1,22 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="max-w-4xl mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-8">
 
-    <div class="mb-6">
+    <div class="mb-4 sm:mb-6">
         <a href="{{ Auth::user()->role === 'admin'
             ? route('admin.dashboard')
             : route('mahasiswa.dashboard') }}"
-            class="inline-flex items-center text-sm font-bold text-gray-500 hover:text-unsriNavy btn-back-transition group transition">
+            class="inline-flex items-center text-xs sm:text-sm font-bold text-gray-500 hover:text-unsriNavy btn-back-transition group transition">
             <i class="fa-solid fa-arrow-left mr-2 group-hover:-translate-x-1 transition-transform"></i>
             Kembali
         </a>
     </div>
 
     @if($errors->any())
-    <div class="mb-6 bg-rose-50 border-l-4 border-rose-500 p-4 rounded-r shadow-sm text-rose-800">
-        <div class="flex items-center mb-1">
-            <i class="fa-solid fa-triangle-exclamation mr-2 text-rose-600"></i>
+    <div class="mb-5 sm:mb-6 bg-rose-50 border-l-4 border-rose-500 p-3.5 sm:p-4 rounded-r shadow-sm text-rose-800">
+        <div class="flex items-center mb-1 text-xs sm:text-sm">
+            <i class="fa-solid fa-triangle-exclamation mr-2 text-rose-600 flex-shrink-0"></i>
             <span class="font-semibold">
                 Mohon perbaiki kesalahan berikut:
             </span>
@@ -30,17 +30,17 @@
     </div>
     @endif
 
-    <div class="bg-white rounded-2xl shadow-xl p-6 border-t-4 border-unsriTeal border border-gray-100">
+    <div class="bg-white rounded-2xl shadow-xl p-4 sm:p-6 border-t-4 border-unsriTeal border border-gray-100">
 
-        <div class="mb-6">
-            <h1 class="text-xl font-bold text-unsriNavy">
+        <div class="mb-5 sm:mb-6">
+            <h1 class="text-lg sm:text-xl font-bold text-unsriNavy">
                 <i class="fa-solid fa-pen-to-square mr-2 text-unsriTeal"></i>
                 Edit Pengaduan
             </h1>
 
             <p class="text-xs text-gray-500 mt-1">
                 Tiket:
-                <strong>{{ $pengaduan->nomor_tiket }}</strong>
+                <strong class="text-unsriNavy">{{ $pengaduan->nomor_tiket }}</strong>
             </p>
         </div>
 
@@ -304,22 +304,22 @@
             @endif
 
             <!-- BUTTON -->
-            <div class="flex gap-3 pt-4">
+            <div class="flex flex-col-reverse sm:flex-row gap-3 pt-4">
 
                 <a
                     href="{{ Auth::user()->role === 'admin'
                         ? route('admin.dashboard')
                         : route('mahasiswa.dashboard') }}"
-                    class="flex-1 text-center bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-2.5 px-4 rounded-lg text-sm">
+                    class="w-full sm:flex-1 text-center bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-3 sm:py-2.5 px-4 rounded-xl text-sm transition">
 
                     Batal
                 </a>
 
                 <button
                     type="submit"
-                    class="flex-1 bg-unsriNavy hover:bg-blue-900 text-white font-medium py-2.5 px-4 rounded-lg text-sm shadow">
+                    class="w-full sm:flex-1 bg-unsriNavy hover:bg-blue-900 text-white font-semibold py-3 sm:py-2.5 px-4 rounded-xl text-sm shadow transition touch-manipulation">
 
-                    <i class="fa-solid fa-floppy-disk mr-1"></i>
+                    <i class="fa-solid fa-floppy-disk mr-1.5"></i>
                     Simpan Perubahan
                 </button>
 
